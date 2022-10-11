@@ -145,6 +145,74 @@ public class Trees<E extends Comparable<E>> {
 			node = node.left;
 		return node;
 	}
+	public Node<E> leftRotation(Node<E> node) {
+		Node<E> temp = node.right;
+		node.right = temp.left;
+		temp.left = node;
+		return temp;
+	}
+	public Node<E> rightRotation(Node<E> node) {
+		Node<E> temp = node.left;
+		node.left = temp.right;
+		temp.right = node;
+		return temp;
+	}
+	public Node<E> rightLeftRotation(Node<E> node) {
+		node.right = rightRotation(node.right);
+		return leftRotation(node);
+	}
+	public Node<E> leftRightRotation(Node<E> node) {
+		node.left = rightRotation(node.left);
+		return leftRotation(node);
+	}
+	public void printLeaves(Node<E> root) {
+		if (root == null) return;
+		if (root.left == null && root.right == null) {
+			System.out.println(root.data + ", ");
+			return;
+		}
+		if(root.left != null)
+			printLeaves(root.left);
+		if(root.right != null)
+			printLeaves(root.right);
+	}
+	public void inOrderTraversal(Node<E> head) {
+		if (head == null)
+			return;
+		inOrderTraversal(head.left);
+		System.out.println(head.data);
+		inOrderTraversal(head.right);
+	}
+	public void preOrderTraversal(Node<E> head) {
+		if (head == null)
+			return;
+		System.out.println(head.data);
+		preOrderTraversal(head.left);
+		preOrderTraversal(head.right);
+	}
+	public void postOrderTraversal(Node<E> head) {
+		if (head == null)
+			return;
+		postOrderTraversal(head.left);
+		postOrderTraversal(head.right);
+		System.out.println(head.data);
+	}
+	public void levelOrderTraversal(Node<E> head) {
+		ArrayList<Node<E>> ar = new ArrayList<>();
+		if (head == null) return;
+		ar.add(head);
+		int curCount = 0;
+		while(curCount < currentSize) {
+			Node<E> curNode = ar.get(curCount);
+			if(curNode != null)
+				System.out.println(curNode.data);
+			if(curNode.left != null)
+				ar.add(curNode.left);
+			if(curNode.right != null)
+				ar.add(curNode.right);
+			curCount++;
+		}
+	}
 	
 	public static void main(String[] args) {
 		Trees<Integer> myTree = new Trees<Integer>();
